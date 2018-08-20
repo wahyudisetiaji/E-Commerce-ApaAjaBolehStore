@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css" />
+
+        <!-- Axios -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">
+
+    <!-- Debug CSS -->
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="./css/debug.css" /> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <title>ApaAjaBolehStore</title>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- Navigation Bar -->
+        <header>
+            <nav class="navbar navbar-expand-lg fixed-top">
+                <img class="logo" src="./img/logo-apbs.png" alt="logo">
+                <button class="navbar-toggler" type="button" style="background-color: #f71924" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: #f71924" href="#">ApaAjaBolehStore</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" style="color: black" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Category
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#laptop">Computer</a>
+                                <a class="dropdown-item" href="#handphone">Hanphone</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+                        <a v-if="!login" class="nav-link" href="#" @click="signIn">Sign In</a>
+                        <a v-if="!login" class="nav-link" href="#" @click="signUp">Sign Up</a>
+                        <button type="button" class="btn btn-danger waves-effect waves-light" style="margin-left: 10px" data-toggle="modal" data-target=".bd-example-modal-lg">
+                            Cart :
+                            <span>{{counterCart(cart)}}</span>
+                        </button><br>
+                        <a v-if="login" class="nav-link" href="#" @click="signOut">Log Out</a>
+                    </form>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Modal Checkout-->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"
+            style="width: 100%">
+            <div class="modal-dialog modal-lg" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Your Cart</p>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(data, index) in cart">
+                                        <td>{{index+1}}</td>
+
+                                        <td>{{data.itemName}}</td>
+                                        <td>{{formatPrice(data.price)}}</td>
+                                        <td>
+                                            <Button class="btn btn-dark" v-on:click="cancelItem(data, index)">Cancel</Button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div style="text-align: right">
+                            <h5>Total : {{formatPrice(total)}}</h5>
+                        </div>
+
+                    </div>
+
+                    <!--Footer-->
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="checkout()">
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+        <!-- Modal Buy-->
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"
+            style="width: 100%">
+            <div class="modal-dialog modal-sm" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Buy Item</p>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="clearBox">
+                            <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="text-center" v-for="(data, index) in box">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Item</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><img class="card-img-top" v-bind:src="data.image" alt="Card image cap"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{data.type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{formatPrice(data.price)}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="modal-footer justify-content-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="addCart" v-on:click="addBuy(data)">
+                                    Add to Cart 
+                                </button> 
+                                <span>|</span>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="clearBox">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+        <main style="margin-top: 70px">
+            <div class="row" style="width: 100%; margin-left: auto; margin-right: auto">
+
+                <!-- Column Sale 1 -->
+                <div class="col">
+                    <!-- Flash Sale Countdown -->
+                    <div class="container">
+                        <div class="row" style="margin-top: 20px">
+                            <h1 style="vertical-align: middle">Flash Sale :</h1>
+                            <div id="clockdiv">
+                                <div>
+                                    <span class="days"></span>
+                                    <div class="smalltext">Days</div>
+                                </div>
+                                <div>
+                                    <span class="hours"></span>
+                                    <div class="smalltext">Hours</div>
+                                </div>
+                                <div>
+                                    <span class="minutes"></span>
+                                    <div class="smalltext">Minutes</div>
+                                </div>
+                                <div>
+                                    <span class="seconds"></span>
+                                    <div class="smalltext">Seconds</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Slider -->
+
+                    <div class="container">
+
+                        <div id="multi-item-example" class="carousel slide carousel-multi-item" data-interval="5000" data-ride="carousel">
+
+                            <!-- Slides -->
+                            <div class="carousel-inner" role="listbox">
+
+                                <!-- First slide -->
+                                <div id="laptop" class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-md-4" v-for="(data, index) in computers">
+                                            <div class="card mb-2">
+                                                <img class="card-img-top" v-bind:src="data.image" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{ data.itemName }}</h4>
+                                                    <p class="card-text">Price : {{formatPrice(data.price)}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- First slide -->
+
+                                <!-- Second slide -->
+                                <div id="computer" class="carousel-item">
+                                    <div class="row">
+                                        <div id="handphone" class="col-md-4" v-for="(data, index) in handphones">
+                                            <div class="card mb-2">
+                                                <img class="card-img-top" v-bind:src="data.image" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{ data.itemName }}</h4>
+                                                    <p class="card-text">Price : {{formatPrice(data.price)}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Second slide -->
+
+                                <!-- Controls -->
+                                <div class="container" style="text-align: center">
+                                    <div class="controls-top">
+                                        <a class="btn-floating" href="#multi-item-example" data-slide="prev">
+                                            <i class="fa fa-chevron-left" style="color: grey"></i>
+                                        </a>
+                                        <a class="btn-floating" href="#multi-item-example" data-slide="next">
+                                            <i class="fa fa-chevron-right" style="color: grey"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Controls -->
+
+                                <ol class="carousel-indicators">
+                                    <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+                                    <li data-target="#multi-item-example" data-slide-to="1"></li>
+
+                                </ol>
+
+
+                            </div>
+                            <!-- Slides -->
+
+                        </div>
+                    </div>
+
+                    <!-- End Carousel Slider -->
+                </div>
+
+
+
+                <div class="col">
+                    <div class="container" style="margin-top: 20px; margin-bottom: 10px; padding:10px; background-color:#DFDFDF">
+                        <p style="font-size: 20px; text-align: center">Special Offer</p>
+                        <img src="./img/promo/merdeka.jpg" class="img-fluid z-depth-2 rounded" alt="Responsive image">
+                    </div>
+                    <div class="container" style="margin-top: 20px; margin-bottom: 10px;background-color:#DFDFDF">
+                        <p style="font-size: 20px; text-align: center">Featured Brands</p>
+                        <img src="./img/logo/apple.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/asus.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/dell.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/lenovo.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/samsung.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/xiaomi.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/thoshiba.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/wd.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/seagate.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/hp.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/logitech.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                        <img src="./img/logo/sony.png" class="brands img-fluid z-depth-2 rounded" alt="Responsive image">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- All Product -->
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col" v-for="(data, index) in items" style="width: 15%; margin-left: auto; margin-right: auto;">
+                        <div class="card mb-2">
+                            <img class="card-img-top" v-bind:src="data.image" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ data.itemName }}</h4>
+                                <p class="card-text">{{formatPrice(data.price)}}</p>
+                                <p class="card-text"> Stock: {{data.stock}}</p>
+                                <button type="button" class="btn btn-danger waves-effect waves-light" @click="addTmp(data)" data-toggle="modal" data-target=".bd-example-modal-sm">
+                                    Buy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Content Category-->
+            <div class="album py-5">
+
+                <div class="row" style="width: 100%; margin-left: auto; margin-right: auto">
+
+                    <!-- Laptop-->
+                    <div class="col-md-6">
+                        <div class="card mb-6 shadow-sm">
+                            <div class="card mb-2">
+                                <div class="hovereffect">
+                                    <img class="card-img-top" src="./img/laptop.jpg" alt="Card image cap">
+                                    <div class="overlay">
+                                        <h2>Laptop</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Hanphone -->
+                    <div class="col-md-6">
+                        <div class="card mb-6 shadow-sm">
+                            <div class="card mb-2">
+                                <div class="hovereffect">
+                                    <img class="card-img-top" src="./img/phone.jpeg" alt="Card image cap">
+                                    <div class="overlay">
+                                        <h2>Hanphone</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer>
+
+                <div style="background-color: #dfdfdf;">
+                    <div class="container">
+
+                        <!-- Grid row-->
+                        <div class="row py-4 d-flex align-items-center">
+
+                            <!-- Grid column -->
+                            <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                                <h6 class="mb-0">ApaAjaBolehStore on social networks!</h6>
+                            </div>
+                            <!-- Grid column -->
+
+                            <!-- Grid column -->
+                            <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+                                <!-- Facebook -->
+                                <a class="fb-ic">
+                                    <i class="fa fa-facebook white-text mr-4"> </i>
+                                </a>
+                                <!-- Twitter -->
+                                <a class="tw-ic">
+                                    <i class="fa fa-twitter white-text mr-4"> </i>
+                                </a>
+                                <!-- Google +-->
+                                <a class="gplus-ic">
+                                    <i class="fa fa-google-plus white-text mr-4"> </i>
+                                </a>
+                                <!--Linkedin -->
+                                <a class="li-ic">
+                                    <i class="fa fa-linkedin white-text mr-4"> </i>
+                                </a>
+                                <!--Instagram-->
+                                <a class="ins-ic">
+                                    <i class="fa fa-instagram white-text"> </i>
+                                </a>
+
+                            </div>
+                            <!-- Grid column -->
+
+                        </div>
+                        <!-- Grid row-->
+
+                    </div>
+                </div>
+
+                <!-- Footer Links -->
+                <div class="container text-center text-md-left mt-5" style="background-color:#DFDFDF; padding: 10px">
+
+                    <!-- Grid row -->
+                    <div class="row mt-3">
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+                            <!-- Content -->
+                            <h6>ApaAjaBolehStore</h6>
+                            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto">
+                            <p>Sebagai toko online terpercaya di Indonesia, ApaAjaBolehStore yang berdiri sejak 2019 telah
+                                dikenal sebagai toko komputer, laptop, gadget, dan aksesori terlengkap.</p>
+
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                            <!-- Links -->
+                            <h6>Products</h6>
+                            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto">
+                            <p>
+                                <a href="#!">Laptop</a>
+                            </p>
+                            <p>
+                                <a href="#!">Hanphone</a>
+                            </p>
+
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                            <!-- Links -->
+                            <h6>Useful links</h6>
+                            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto">
+                            <p>
+                                <a href="#!">Your Account</a>
+                            </p>
+                            <p>
+                                <a href="#!">Become an Affiliate</a>
+                            </p>
+                            <p>
+                                <a href="#!">Shipping Rates</a>
+                            </p>
+                            <p>
+                                <a href="#!">Help</a>
+                            </p>
+
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+                            <!-- Links -->
+                            <h6>Contact</h6>
+                            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto">
+                            <p>
+                                <i class="fa fa-home mr-3"></i> Planet Mars</p>
+                            <p>
+                                <i class="fa fa-envelope mr-3"></i> info@apaajabolehstore.com</p>
+                            <p>
+                                <i class="fa fa-phone mr-3"></i> + 66 666 666 66</p>
+                            <p>
+                                <i class="fa fa-print mr-3"></i> + 11 111 111 11</p>
+
+                        </div>
+                        <!-- Grid column -->
+
+                    </div>
+                    <!-- Grid row -->
+
+                </div>
+                <!-- Footer Links -->
+
+                <!-- Copyright -->
+                <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                    <a href="#">ApaAjaBolehStore</a>
+                </div>
+                <!-- Copyright -->
+
+            </footer>
+            <!-- Footer -->
+
+    </div>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Custom Script -->
+    <script src="./js/index/vue.js"></script>
+    <script src="./js/index/script.js"></script>
+</body>
+
+</html>

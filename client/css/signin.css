@@ -1,0 +1,12 @@
+body {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+  background-image: url("../img/oscar-nilsson-13605-unsplash.jpg");
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-color: #E5E5E5;
+}
+
+.card {
+    background-color: #DFDFDF;
+}

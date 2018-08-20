@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/admin.css" />
+
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">
+
+    <!-- Debug CSS -->
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="./css/debug.css" /> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <title>ApaAjaBolehStore</title>
+</head>
+
+<body>
+
+    <div id="item">
+
+        <!-- Navigation Bar -->
+        <header>
+            <nav class="navbar navbar-expand-lg fixed-top">
+                <img class="logo" src="./img/logo-apbs.png" alt="logo">
+                <button class="navbar-toggler" type="button" style="background-color: #f71924" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: #f71924" href="http://localhost:8080/admin.html">ApaAjaBolehStore</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click="myItem">My Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="modal" data-target=".bd-example-modal-sm">Add Item</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+                        <a class="nav-link" href="#" @click="logout">Log Out</a>
+                    </form>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Modal Add-->
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"
+            style="width: 100%">
+            <div class="modal-dialog modal-sm" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Add Item</p>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="itemName"></label>Item Name</label>
+                                <input type="text" class="form-control" id="itemName" v-model="itemName">
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <input type="file" class="form-control" id="image" v-on:change="getImage($event)">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" id="price" v-model="price">
+                            </div>
+                            <div class="form-group">
+                                <label for="stock">Stock</label>
+                                <input type="number" class="form-control" id="stock" v-model="stock">
+                            </div>
+                            <div class="form-group">
+                                <label for="itemName"></label>Category</label>
+                                <input type="text" class="form-control" id="itemName" v-model="category">
+                            </div>
+                            <button type="submit" class="btn btn-primary" @click="createItem">Add</button>
+                        </form>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+        <!-- Modal update-->
+        <div class="modal fade bd-example-modal-sm modal-update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"
+            style="width: 100%">
+            <div class="modal-dialog modal-sm" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Update Item</p>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="itemName"></label>Item Name</label>
+                                <input type="text" class="form-control" id="itemName" v-model="itemName">
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <input type="file" class="form-control" id="image" v-on:change="getImage($event)">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" id="price" v-model="price">
+                            </div>
+                            <div class="form-group">
+                                <label for="stock">Stock</label>
+                                <input type="number" class="form-control" id="stock" v-model="stock">
+                            </div>
+                            <div class="form-group">
+                                <label for="itemName"></label>Category</label>
+                                <input type="text" class="form-control" id="itemName" v-model="category">
+                            </div>
+                            <button type="submit" class="btn btn-primary" @click="updateItem">Update</button>
+                        </form>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
+        <!-- All Product -->
+
+        <div class="container-fluid">
+            <div class="row" style="margin-top: 80px">
+
+                <div class="col" v-for="(data, index) in items" style="width: 15%; margin-left: auto; margin-right: auto;">
+                    <div class="card mb-2">
+                        <img class="card-img-top" v-bind:src="data.image" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ data.itemName }}</h4>
+                            <p class="card-text">Price : {{data.price}}</p>
+                            <p class="card-text"> Stock: {{data.stock}}</p>
+                            <p class="card-text"> Category: {{data.category}}</p>
+                            <button type="button" class="btn btn-danger waves-effect waves-light" @click="getOneItem(data)" data-toggle="modal" data-target=".modal-update">
+                                Update
+                            </button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light" @click="deleteItem(data)">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Custom Script -->
+    <script src="./js/admin/admin.js"></script>
+</body>
+
+</html>

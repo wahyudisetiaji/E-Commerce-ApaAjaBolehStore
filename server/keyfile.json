@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "apa-aja-boleh-store",
+    "private_key_id": "020b78957a17b47788f0e7b57b0fd410a5165669",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDKxTnXhS/D7cUZ\nZzxUnfdPNnHTYwSLFXntu38orEYWMf3Byx1oC8gM82Ty+lmIJ5po9mp0ECY/pksD\nJs1Swb/gHE8l4Gm3O7phbonWowB2twBTk3tMuhcIqmHNvqzVTlyM2oSmoJT91oc0\nD0AiuX64Jw1VlvvRhtot4S6u4W1VHB94uZTEPCAEood2mtxzNVA6MczOcQOG+Ym+\nHtvQYfHxcNtd7jEQ50b9Pm1vl9QzV1UQKsFSW62blZla07Uc9qX1DcLdCyETa2Pk\nbVjDesM1o3/rr7EJ2dp6Nk3l1BJ8iiymn6oTJDhKr5DE/jCaJCwewm5KryyLArGM\n5BpDrGZzAgMBAAECggEACB7XG5MUgAbURbMrtSidkEkm5jqCvETM6dqZ06z3VZY4\nI/wYnmN/MuP6EmNr4hcFiQr6GNHSWYQ1LT6IxIKvE30uvxHHFttIGI5ohY8B/fJQ\nPtVnzIFujYTjsjpFPUZyts73HWrOH+hPTwqftlEYpEYnTSeYLoj1arCOjqeUGe9n\nG7NX7Yi/wJMf7p+Qd4EyyiES7CoPKfK0fbfKSO8ilnQ6jPRmHcegobhYGaho8BTw\n5U5tTBEvsxGfGSp7SK3mGdRB/1Pr+shZjhgiAIoYOnO8jvZw8XB+kdvHLVESDUYZ\nVwHtD5RDZr3t1FMziq3uu5KsfKMEJYeUBsjvQNvucQKBgQDyIMARsG2eHMeHT95m\nHAYDNiL2k4q+5GC/2pzQnlJiC738NmxD/anBiR3RnZp2UAyCdi3bnYH8BxVtqe+n\nXM6dxJaO8NhedDd+cXAXLnWpS7uqQ4Jc8OORHskp62hF5rxaSS5Pb5Pq0NJeoMXW\nGLa87JGe/557kyp1jnZbZzvlqQKBgQDWYzm/izS9MncNUvhml1Hg/TRdWz6+IOwV\nNLD1pZpoAUfzCMmrKR0tJbBq7wanIWWv34VfgOmifsbZs4G/1y1cCmP8MMGf2VK5\nfnOFrTM4fM1hjoZBAtYtCVfGrtfvAJMaJKE9Jwig1QLPQGLktcJtqgaqzY/YJRwl\nImedy80EuwKBgCWqaJaX3oWRLozjJNK3m0vWmRvImfXWKyLNTEW7y08LSpO4l6EA\nDe9YeDYKkWPEUh3daobWeskNBQ1ZOTnM2yt50H4OA2q2I4fc97XzeURLzrbO57Gz\nm4MQyfRmdYMiQLy+06Bx2A3YTFGCKySCFbNQDdsxIqNQonNFJS5U4eF5AoGAez6B\nlS6Ge/lF3WAEMp3s0QVelAh/UjeE4E/xJtYzpHSQExPLM10oS6rt9xs/3NZjKa66\ncoOeS+7Li50ZCtq9VbsXbYPt22HIn6Ak8wT1fBSq0NlpLnhd/XfwgOREeD4BUrca\nBhipaiPqQJCICWi/w+FJgek4Nw5mVqanoFvnmT8CgYAYRdMqUBLhxOG4EYAB6c1B\n7LV99+P8/H/obhPN6myGBliwEc4rjh8aXXo3+BSGuDyzLaTpzhVNjBx/3jaSFqcZ\nK6Kx5SjX6eb9Iqps4JVv6d+A9UeMh+Uh7ef+W60Ex6H1aN8y0mIJI19k5miQq1pe\n2kddP3+TPDEA2jezldUy6A==\n-----END PRIVATE KEY-----\n",
+    "client_email": "apaajabolehstore@apa-aja-boleh-store.iam.gserviceaccount.com",
+    "client_id": "112452458757359822647",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/apaajabolehstore%40apa-aja-boleh-store.iam.gserviceaccount.com"
+  }
+  
