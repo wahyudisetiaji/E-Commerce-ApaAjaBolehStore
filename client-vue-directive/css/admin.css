@@ -1,0 +1,175 @@
+body {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    background-image: url("../img/oscar-nilsson-13605-unsplash.jpg");
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-color: #E5E5E5;
+}
+
+.logo {
+    width: 25px;
+    height: 25px;
+}
+
+.navbar {
+    background-color: #DFDFDF;
+    font-size: 20px;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 2px 8px 2px gray;
+    
+}
+
+.card {
+    background-color: #DFDFDF;
+}
+
+
+.navbar a:hover {
+    color:gray;
+}
+
+.nav-link {
+    color: black;
+}
+
+.carousel {
+    margin: 20px;
+}
+
+.brands {
+    width: 100px;
+}
+
+.content {
+    margin: 20px;
+}
+
+.fa {
+    color: #f71924;
+}
+
+footer a {
+    color: #f71924;
+}
+
+/* Countdown Timer */
+
+h1{
+    color: #f71924;
+    font-weight: 100;
+    font-size: 30px;
+    padding: 20px;
+
+  }
+  
+  #clockdiv{
+      font-family: sans-serif;
+      color: #f71924;
+      display: inline-block;
+      font-weight: 50;
+      text-align: center;
+      font-size: 20px;
+  }
+  
+  #clockdiv > div{
+      padding: 5px;
+      border-radius: 3px;
+      background: #DFDFDF;
+      display: inline-block;
+  }
+  
+  #clockdiv div > span{
+      padding: 5px;
+      border-radius: 3px;
+      background: white;
+      display: inline-block;
+  }
+  
+  .smalltext{
+      padding-top: 5px;
+      font-size: 10px;
+  }
+
+  /* Content */
+  .hovereffect {
+    width: 100%;
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    cursor: default;
+  }
+  
+  .hovereffect .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+  }
+  
+  .hovereffect:hover .overlay {
+    background-color: rgba(170,170,170,0.4);
+  }
+  
+  .hovereffect h2, .hovereffect img {
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+  }
+  
+  .hovereffect img {
+    display: block;
+    position: relative;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  
+  .hovereffect:hover img {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+  
+  .hovereffect h2 {
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    font-size: 17px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
+  .hovereffect a.info {
+    display: inline-block;
+    text-decoration: none;
+    padding: 7px 14px;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid #fff;
+    margin: 50px 0 0 0;
+    background-color: transparent;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    font-weight: normal;
+    height: 85%;
+    width: 85%;
+    position: absolute;
+    top: -20%;
+    left: 8%;
+    padding: 70px;
+  }
+  
+  
